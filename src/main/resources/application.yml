@@ -1,0 +1,38 @@
+
+server:
+  port: 8080
+
+spring:
+  cache:
+    type: redis
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 5000
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bank_account_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+#        настройка пакетной обработки
+        jdbc.batch_size: 50 # Размер пакета
+        order_inserts: true
+        order_updates: true
+  liquibase:
+    change-log: classpath:db/migration/changelog-master.yaml
+
+
+
+
+jwt:
+  secret: "v7JbQztqy2Lk9wRfXxNv3eZaSgD1Gp5YrC/KmMhUoE0="
+  expiration-ms: 86400000
+

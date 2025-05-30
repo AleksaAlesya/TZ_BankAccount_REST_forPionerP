@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/migration/version_1_0/data/V1__create_user_table.yaml
+  - include:
+      file: db/migration/version_1_0/data/V2__create_account_table.yaml
+  - include:
+      file: db/migration/version_1_0/data/V3__create_email_table.yaml
+  - include:
+      file: db/migration/version_1_0/data/V4__create_phone_table.yaml
+  - include:
+      file: db/migration/version_1_0/data/V5__create_transaction_table.yaml
+  - include:
+      file: db/migration/version_1_0/data/V6__test_data.yaml

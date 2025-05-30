@@ -1,0 +1,184 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: aleksa-brakor
+      changes:
+        # Пользователь 1 (2 телефона, 2 email)
+        - insert:
+            tableName: USERS
+            columns:
+              - column:
+                  name: ID
+                  value: 1
+              - column:
+                  name: NAME
+                  value: "Иван Петров"
+              - column:
+                  name: DATE_OF_BIRTH
+                  value: "1993-05-01"
+              - column:
+                  name: PASSWORD
+                  value: "$2a$12$.40hbqMXAiJXN/X2Sfu0cu32RC4P9c.sWh9cLypFtQ06DP1ArPChK"  # 12345678
+
+        - insert:
+            tableName: ACCOUNT
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 1
+              - column:
+                  name: BALANCE
+                  value: 100.00
+              - column:
+                  name: INITIAL_BALANCE
+                  value: 100.00
+
+        - insert:
+            tableName: PHONE_DATA
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 1
+              - column:
+                  name: PHONE
+                  value: "79201112233"
+
+        - insert:
+            tableName: PHONE_DATA
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 1
+              - column:
+                  name: PHONE
+                  value: "79204445566"
+
+        - insert:
+            tableName: EMAIL_DATA
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 1
+              - column:
+                  name: EMAIL
+                  value: "ivan@example.com"
+
+        - insert:
+            tableName: EMAIL_DATA
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 1
+              - column:
+                  name: EMAIL
+                  value: "ivan.backup@example.com"
+
+        # Пользователь 2 (1 телефон, 1 email)
+        - insert:
+            tableName: USERS
+            columns:
+              - column:
+                  name: ID
+                  value: 2
+              - column:
+                  name: NAME
+                  value: "Мария Сидорова"
+              - column:
+                  name: DATE_OF_BIRTH
+                  value: "1985-12-15"
+              - column:
+                  name: PASSWORD
+                  value: "$2a$12$.40hbqMXAiJXN/X2Sfu0cu32RC4P9c.sWh9cLypFtQ06DP1ArPChK"  # 12345678
+
+        - insert:
+            tableName: ACCOUNT
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 2
+              - column:
+                  name: BALANCE
+                  value: 200.00
+              - column:
+                  name: INITIAL_BALANCE
+                  value: 200.00
+
+        - insert:
+            tableName: PHONE_DATA
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 2
+              - column:
+                  name: PHONE
+                  value: "79202278899"
+
+        - insert:
+            tableName: EMAIL_DATA
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 2
+              - column:
+                  name: EMAIL
+                  value: "maria@example.com"
+
+        # Пользователь 3 (2 телефон, 1 email)
+        - insert:
+            tableName: USERS
+            columns:
+              - column:
+                  name: ID
+                  value: 3
+              - column:
+                  name: NAME
+                  value: "Наталья Петрова"
+              - column:
+                  name: DATE_OF_BIRTH
+                  value: "1985-12-15"
+              - column:
+                  name: PASSWORD
+                  value: "$2a$12$.40hbqMXAiJXN/X2Sfu0cu32RC4P9c.sWh9cLypFtQ06DP1ArPChK"  # 12345678
+
+        - insert:
+            tableName: ACCOUNT
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 3
+              - column:
+                  name: BALANCE
+                  value: 200.00
+              - column:
+                  name: INITIAL_BALANCE
+                  value: 200.00
+
+        - insert:
+            tableName: PHONE_DATA
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 3
+              - column:
+                  name: PHONE
+                  value: "79257778899"
+
+        - insert:
+            tableName: PHONE_DATA
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 3
+              - column:
+                  name: PHONE
+                  value: "79202278819"
+
+        - insert:
+            tableName: EMAIL_DATA
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 3
+              - column:
+                  name: EMAIL
+                  value: "nata@example.com"

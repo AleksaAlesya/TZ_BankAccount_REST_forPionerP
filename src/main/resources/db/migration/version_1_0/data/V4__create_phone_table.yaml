@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: aleksa-brakor
+      changes:
+        - createTable:
+            tableName: PHONE_DATA
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: USER_ID
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_phone_user
+                    referencedTableName: USERS
+                    referencedColumnNames: ID
+                    deleteCascade: true
+              - column:
+                  name: PHONE
+                  type: VARCHAR(13)
+                  constraints:
+                    nullable: false
+                    unique: true
+#                    checkConstraint: "PHONE ~ '^7\\d{10}$'"
+            remarks: "Таблица телефонных номеров (формат: 79207865432)"
