@@ -42,10 +42,12 @@ public class AccountServiceImpl implements AccountService {
         AccountPair accountPair = lockAccountsInOrder(fromUserId, toUserId);
         Account fromAccount = accountPair.fromAccount();
         Account toAccount = accountPair.toAccount();
-        log.info("[{}] Счета заблокированы: fromAccountId={}; toAccountId={}",
+        log.info("[{}] Счета заблокированы: fromAccountId={}; toAccountId={},fromBalance={}, toBalance={}",
                 transferId,
                 fromAccount.getId(),
-                toAccount.getId());
+                toAccount.getId(),
+                fromAccount.getBalance(),
+                toAccount.getBalance());
 
         checkAccountBalance(fromAccount, amount);
         log.debug("[{}] Подтверждено наличие достаточных средств", transferId);
@@ -68,9 +70,13 @@ public class AccountServiceImpl implements AccountService {
     // 1. Валидация входных параметров
     private void validateTransferRequest(Long fromUserId, Long toUserId, BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            log.warn("Сумма перевода должна быть положительной: amount{}",
+                    amount);
             throw new IllegalArgumentException("Сумма перевода должна быть положительной");
         }
         if (fromUserId.equals(toUserId)) {
+            log.warn("Перевод самому себе запрещен: fromUserId={}, toUserId={}",
+                    fromUserId, toUserId);
             throw new IllegalArgumentException("Перевод самому себе запрещен");
         }
     }
@@ -86,8 +92,8 @@ public class AccountServiceImpl implements AccountService {
 
     // 3. Блокировка счетов в детерминированном порядке
     AccountPair lockAccountsInOrder(Long fromUserId, Long toUserId) {
-        Long minId = Math.min(fromUserId, toUserId);
-        Long maxId = Math.max(fromUserId, toUserId);
+        Long minId = (Long) Math.min(fromUserId, toUserId);
+        Long maxId = (Long) Math.max(fromUserId, toUserId);
         log.debug("[] Блокировка счетов в порядке очередности: minId={}, maxId={}", minId, maxId);
 
         //  Блокировки аккаунтов

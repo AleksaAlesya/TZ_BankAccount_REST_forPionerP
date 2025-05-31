@@ -35,19 +35,19 @@ public class BalanceServiceImpl implements BalanceService {
     public void applyPercent() {
         try {
             //Пакетная обработка счетов:
-            log.info("Start apply percent");
-            int page = 0;
+            log.info("СТАРТ начисления процентов по счетам");
+            int totalBatches  = 0;
             Page<Account> accountPage;
 
             do {
-                accountPage = accountRepository.findAll(PageRequest.of(page, BATCH_SIZE));
+                accountPage = accountRepository.findAll(PageRequest.of(totalBatches , BATCH_SIZE));
                 processAccountsBatch(accountPage.getContent());
-                page++;
+                totalBatches ++;
             } while (accountPage.hasNext());
-            log.info("Completed apply percent. Total processed: {}", page);
+            log.info("ЗАВЕРШЕНО. Обработано пакетов: {}", totalBatches);
 
         } catch (Exception e) {
-            log.error("Error apply percent", e);
+            log.error("ОШИБКА при начислении процентов", e);
             throw new RuntimeException(e);
         }
     }
@@ -55,7 +55,7 @@ public class BalanceServiceImpl implements BalanceService {
     //Отдельные транзакции для каждого пакета:
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void processAccountsBatch(List<Account> accounts) {
-        log.debug("Processing batch of {} accounts", accounts.size());
+        log.debug("Обработка пакета из {} счетов", accounts.size());
 
         List<Account> updatedAccounts = accounts.stream()
                 .map(this::calculateNewBalance)

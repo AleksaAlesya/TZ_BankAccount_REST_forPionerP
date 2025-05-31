@@ -10,6 +10,7 @@ import by.aleksabrakor.bank_accounts.service.UserService;
 import by.aleksabrakor.bank_accounts.repository.specification.UserSpecifications;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -31,8 +33,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Cacheable(value = "users", key = "#id")
-    public UserResponse getUserById(Long id) {
-        return userMapper.userToUserResponse(findUserOrThrow(id));
+    public UserResponse getUserById(Long userId) {
+        User user = findUserOrThrow(userId);
+        log.debug("Пользователь [userId: {}] успешно получен", userId);
+        return userMapper.userToUserResponse(user);
     }
 
 
@@ -42,6 +46,11 @@ public class UserServiceImpl implements UserService {
                                           String email,
                                           Pageable pageable
     ) {
+        log.info("Поиск пользователей | Параметры: "
+                 + "name={}, dateOfBirth={}, phone={}, email={}, page={}, size={}",
+                name, dateOfBirth, phone, email,
+                pageable.getPageNumber(), pageable.getPageSize());
+
         Specification<User> spec = Specification.where(null);
         if (name != null) {
             spec = spec.and(userSpecifications.nameStartsWith(name));
@@ -55,12 +64,19 @@ public class UserServiceImpl implements UserService {
         if (email != null) {
             spec = spec.and(userSpecifications.hasExactEmail(email));
         }
+        log.debug("Сформированная спецификация: {}", spec);
+
         return userRepository.findAll(spec, pageable)
                 .map(userMapper::userToUserResponse);
     }
 
+
     User findUserOrThrow(Long userId) {
+        log.debug("Поиск пользователя в БД по userId: {}", userId);
         return userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Юзер с id = " + userId + " не найден"));
+                .orElseThrow(() -> {
+                    log.warn("Пользователь с userId: {} не найден в БД", userId);
+                    return new NotFoundException("Юзер с id = " + userId + " не найден");
+                });
     }
 }

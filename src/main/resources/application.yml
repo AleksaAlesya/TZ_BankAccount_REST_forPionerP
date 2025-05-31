@@ -30,9 +30,17 @@ spring:
     change-log: classpath:db/migration/changelog-master.yaml
 
 
-
-
 jwt:
   secret: "v7JbQztqy2Lk9wRfXxNv3eZaSgD1Gp5YrC/KmMhUoE0="
   expiration-ms: 86400000
 
+logging:
+  level:
+    root: INFO
+    # Уровень для сервисов
+    by.aleksabrakor.bank_accounts: DEBUG
+
+  file:
+    name: logs/application.log
+    max-size: 10MB
+    max-history: 7
