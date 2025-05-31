@@ -21,12 +21,12 @@ public class PhoneUpdateRequest {
     @Schema(description = "oldNumber", example = "72134567891")
     @NotBlank(message = "Введите старый номер телефона для изменения")
     @Size(max = 13)
-    @Pattern(regexp = "^7\\d{10}$", message = "Номер телефона должен быть в формате 79201234567 (начинаться с 7 всего 11 цифр")
+    @Pattern(regexp = "^7\\d{10}$", message = "Номер телефона должен быть в формате 79201234567 (начинаться с 7 всего 11 цифр)")
     private String oldNumber;
 
     @Schema(description = "newNumber", example = "72134567891")
     @NotBlank(message = "Введите новый номер телефона на который необходимо заменить")
     @Size(max = 13)
-    @Pattern(regexp = "^7\\d{10}$", message = "Номер телефона должен быть в формате 79201234567 (начинаться с 7 всего 11 цифр")
+    @Pattern(regexp = "^7\\d{10}$", message = "Номер телефона должен быть в формате 79201234567 (начинаться с 7 всего 11 цифр)")
     private String newNumber;
 }
