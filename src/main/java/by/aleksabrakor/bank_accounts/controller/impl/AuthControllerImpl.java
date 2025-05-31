@@ -1,5 +1,6 @@
 package by.aleksabrakor.bank_accounts.controller.impl;
 
+import by.aleksabrakor.bank_accounts.controller.AuthController;
 import by.aleksabrakor.bank_accounts.dto.request.AuthRequest;
 import by.aleksabrakor.bank_accounts.service.AuthService;
 import jakarta.validation.Valid;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @Slf4j
-public class AuthControllerImpl  {
+public class AuthControllerImpl implements AuthController {
     private final AuthService authService;
 
     @PostMapping()

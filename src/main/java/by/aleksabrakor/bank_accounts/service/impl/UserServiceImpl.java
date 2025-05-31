@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
 
-    @Cacheable(value = "users", key = "#id")
+    @Cacheable(value = "users", key = "#userId")
     public UserResponse getUserById(Long userId) {
         User user = findUserOrThrow(userId);
         log.debug("Пользователь [userId: {}] успешно получен", userId);
